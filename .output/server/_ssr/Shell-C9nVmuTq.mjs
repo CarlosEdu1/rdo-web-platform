@@ -1,0 +1,830 @@
+import { i as __toESM } from "../_runtime.mjs";
+import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
+import { d as useRouterState, v as Link, y as useNavigate } from "../_libs/@tanstack/react-router+[...].mjs";
+import { a as require_jsx_runtime } from "../_libs/@radix-ui/react-collection+[...].mjs";
+import { G as Bell, I as ChevronRight, L as ChevronDown, M as Circle, P as CircleDot, R as Check, S as HardHat, W as BrainCircuit, b as LayoutDashboard, g as Microscope, j as ClipboardCheck, l as Settings, s as Smartphone, u as Search } from "../_libs/lucide-react.mjs";
+import { a as Label2, c as Root2, d as SubTrigger2, f as Trigger, i as ItemIndicator2, l as Separator2, n as Content2, o as Portal2, r as Item2, s as RadioItem2, t as CheckboxItem2, u as SubContent2 } from "../_libs/@radix-ui/react-dropdown-menu+[...].mjs";
+import { t as clsx } from "../_libs/clsx.mjs";
+import { t as twMerge } from "../_libs/tailwind-merge.mjs";
+import { i as Trigger$1, n as Portal, r as Root2$1, t as Content2$1 } from "../_libs/radix-ui__react-popover.mjs";
+import { t as Toaster } from "../_libs/sonner.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/Shell-C9nVmuTq.js
+var import_react = /* @__PURE__ */ __toESM(require_react());
+var import_jsx_runtime = require_jsx_runtime();
+var links = [
+	{
+		to: "/",
+		label: "Dashboard Estratégico",
+		icon: LayoutDashboard
+	},
+	{
+		to: "/rdo",
+		label: "Centro de Revisão & Auditoria de RDO",
+		icon: ClipboardCheck
+	},
+	{
+		to: "/diagnostico",
+		label: "Diagnóstico & Gestão Inteligente",
+		icon: Microscope
+	},
+	{
+		to: "/rag",
+		label: "Hub de Integrações & RAG",
+		icon: BrainCircuit
+	},
+	{
+		to: "/configuracoes",
+		label: "Configurações & Logs de Auditoria",
+		icon: Settings
+	}
+];
+function AppSidebar() {
+	const pathname = useRouterState({ select: (r) => r.location.pathname });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
+		className: "hidden md:flex fixed inset-y-0 left-0 z-30 w-[250px] flex-col border-r border-zinc-800/60 bg-zinc-900/95 backdrop-blur",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "px-5 py-5 border-b border-zinc-800/60",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center gap-2.5",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-lg shadow-indigo-500/20",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HardHat, { className: "h-5 w-5 text-white" })
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "text-sm font-semibold tracking-tight text-zinc-50",
+						children: "SmartForeman"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "text-[10px] font-mono uppercase text-zinc-500 tracking-wider",
+						children: "Web · v2.4 Enterprise"
+					})] })]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "mt-4 flex items-center gap-2 rounded-md border border-emerald-500/20 bg-emerald-500/5 px-2.5 py-1.5",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleDot, { className: "h-3 w-3 text-emerald-400 animate-pulse" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "text-[11px] font-medium text-emerald-300",
+							children: "IA Agents Active"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "ml-auto font-mono text-[10px] text-emerald-400/70",
+							children: "3/3"
+						})
+					]
+				})]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+				className: "flex-1 overflow-y-auto scrollbar-thin px-3 py-4",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-zinc-500",
+					children: "Workspace"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+					className: "space-y-1",
+					children: links.map(({ to, label, icon: Icon }) => {
+						const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+							to,
+							className: ["group flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-all", active ? "bg-indigo-500/10 text-indigo-300 border border-indigo-500/30" : "text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-100 border border-transparent"].join(" "),
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: ["h-4 w-4 shrink-0", active ? "text-indigo-400" : ""].join(" ") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "truncate",
+								children: label
+							})]
+						}) }, to);
+					})
+				})]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "border-t border-zinc-800/60 p-3",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center gap-2.5 rounded-md p-2 hover:bg-zinc-800/50 transition-colors",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "flex h-9 w-9 items-center justify-center rounded-full bg-zinc-800 text-xs font-semibold text-zinc-200 border border-zinc-700",
+						children: "CA"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "min-w-0 flex-1",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "truncate text-xs font-semibold text-zinc-100",
+							children: "Eng. Carlos Andrade"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "truncate text-[10px] text-zinc-500",
+							children: "Diretor · Admin"
+						})]
+					})]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					className: "mt-2 flex w-full items-center gap-2 rounded-md border border-zinc-800 px-2.5 py-1.5 text-[11px] text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Smartphone, { className: "h-3.5 w-3.5" }), "Trocar para Mobile"]
+				})]
+			})
+		]
+	});
+}
+var PROJECTS = [
+	{
+		id: "torre-a",
+		name: "Torre A - Residencial Horizon",
+		location: "Vitória, ES",
+		status: "warning",
+		physicalDone: 68,
+		physicalPlanned: 73,
+		financialDone: 4.2,
+		financialPlanned: 4.5,
+		weather: "☀️ 28°C - Sem Impacto",
+		rdoStatus: "🟢 RDO Enviado & Aprovado",
+		effectivePlanned: 48,
+		effectiveReal: 42
+	},
+	{
+		id: "corporate-tower",
+		name: "Corporate Tower",
+		location: "São Paulo, SP",
+		status: "on-track",
+		physicalDone: 42,
+		physicalPlanned: 41,
+		financialDone: 8.9,
+		financialPlanned: 9,
+		weather: "⛅ 24°C",
+		rdoStatus: "🟢 RDO Enviado & Aprovado",
+		effectivePlanned: 72,
+		effectiveReal: 74
+	},
+	{
+		id: "residencial-marina",
+		name: "Residencial Marina Bay",
+		location: "Vila Velha, ES",
+		status: "on-track",
+		physicalDone: 84,
+		physicalPlanned: 82,
+		financialDone: 12.1,
+		financialPlanned: 12.4,
+		weather: "☀️ 30°C",
+		rdoStatus: "🟢 RDO Aprovado",
+		effectivePlanned: 55,
+		effectiveReal: 57
+	},
+	{
+		id: "shopping-central",
+		name: "Shopping Central - Fase 2",
+		location: "Serra, ES",
+		status: "critical",
+		physicalDone: 22,
+		physicalPlanned: 34,
+		financialDone: 2.1,
+		financialPlanned: 3.4,
+		weather: "🌧️ 21°C - Impacto",
+		rdoStatus: "🔴 Paralisação Registrada",
+		effectivePlanned: 90,
+		effectiveReal: 41
+	},
+	{
+		id: "hospital-santa",
+		name: "Hospital Santa Clara - Ala Sul",
+		location: "Cariacica, ES",
+		status: "on-track",
+		physicalDone: 55,
+		physicalPlanned: 55,
+		financialDone: 6.3,
+		financialPlanned: 6.4,
+		weather: "☀️ 27°C",
+		rdoStatus: "🟢 RDO Aprovado",
+		effectivePlanned: 60,
+		effectiveReal: 58
+	},
+	{
+		id: "escola-tecnica",
+		name: "Escola Técnica Municipal",
+		location: "Guarapari, ES",
+		status: "warning",
+		physicalDone: 38,
+		physicalPlanned: 44,
+		financialDone: 1.9,
+		financialPlanned: 2.3,
+		weather: "⛅ 26°C",
+		rdoStatus: "🟡 Pendente Revisão",
+		effectivePlanned: 34,
+		effectiveReal: 28
+	}
+];
+var ALERTS = [
+	{
+		id: "a1",
+		agent: "0",
+		agentName: "Agente 0 · Contratual & Legal",
+		severity: "warning",
+		projectId: "torre-a",
+		message: "Aditivo Contratual: Atraso na Laje L3 ultrapassa limite de carência do contrato em 2 dias.",
+		time: "há 12 min"
+	},
+	{
+		id: "a2",
+		agent: "1",
+		agentName: "Agente 1 · Cronograma & MS Project",
+		severity: "warning",
+		projectId: "torre-a",
+		message: "Desvio Detectado: Progresso físico da Torre A está 5% atrás do planejado para a semana 14.",
+		time: "há 32 min"
+	},
+	{
+		id: "a3",
+		agent: "2",
+		agentName: "Agente 2 · Insumos & Histograma",
+		severity: "critical",
+		projectId: "shopping-central",
+		message: "Defasagem de Efetivo: Mão de obra de pedreiros está 20% abaixo da meta do histograma.",
+		time: "há 1h"
+	},
+	{
+		id: "a4",
+		agent: "1",
+		agentName: "Agente 1 · Cronograma & MS Project",
+		severity: "critical",
+		projectId: "shopping-central",
+		message: "Caminho Crítico Comprometido: Atraso acumulado de 12 dias em atividades sucessoras.",
+		time: "há 2h"
+	},
+	{
+		id: "a5",
+		agent: "0",
+		agentName: "Agente 0 · Contratual & Legal",
+		severity: "warning",
+		projectId: "escola-tecnica",
+		message: "Cláusula 8.2: Necessário aditivo formal para prorrogação de prazo detectada em cronograma.",
+		time: "há 4h"
+	}
+];
+var RDOS = [
+	{
+		id: "RDO-2048",
+		date: "24/07/2026",
+		projectId: "torre-a",
+		responsible: "Eng. Marcelo Silva",
+		effectiveReal: 42,
+		effectivePlanned: 48,
+		weather: "☀️",
+		occurrences: 2,
+		iaStatus: "warning"
+	},
+	{
+		id: "RDO-2047",
+		date: "24/07/2026",
+		projectId: "corporate-tower",
+		responsible: "Eng. Ana Beatriz",
+		effectiveReal: 74,
+		effectivePlanned: 72,
+		weather: "⛅",
+		occurrences: 0,
+		iaStatus: "approved"
+	},
+	{
+		id: "RDO-2046",
+		date: "24/07/2026",
+		projectId: "shopping-central",
+		responsible: "Eng. Roberto Lima",
+		effectiveReal: 41,
+		effectivePlanned: 90,
+		weather: "🌧️",
+		occurrences: 5,
+		iaStatus: "critical"
+	},
+	{
+		id: "RDO-2045",
+		date: "23/07/2026",
+		projectId: "torre-a",
+		responsible: "Eng. Marcelo Silva",
+		effectiveReal: 44,
+		effectivePlanned: 48,
+		weather: "⛅",
+		occurrences: 1,
+		iaStatus: "warning"
+	},
+	{
+		id: "RDO-2044",
+		date: "23/07/2026",
+		projectId: "residencial-marina",
+		responsible: "Eng. Patrícia Souza",
+		effectiveReal: 57,
+		effectivePlanned: 55,
+		weather: "☀️",
+		occurrences: 0,
+		iaStatus: "approved"
+	},
+	{
+		id: "RDO-2043",
+		date: "23/07/2026",
+		projectId: "hospital-santa",
+		responsible: "Eng. Diego Almeida",
+		effectiveReal: 58,
+		effectivePlanned: 60,
+		weather: "☀️",
+		occurrences: 1,
+		iaStatus: "approved"
+	},
+	{
+		id: "RDO-2042",
+		date: "22/07/2026",
+		projectId: "escola-tecnica",
+		responsible: "Eng. Camila Rocha",
+		effectiveReal: 28,
+		effectivePlanned: 34,
+		weather: "⛅",
+		occurrences: 2,
+		iaStatus: "pending"
+	},
+	{
+		id: "RDO-2041",
+		date: "22/07/2026",
+		projectId: "torre-a",
+		responsible: "Eng. Marcelo Silva",
+		effectiveReal: 40,
+		effectivePlanned: 48,
+		weather: "🌧️",
+		occurrences: 3,
+		iaStatus: "warning"
+	},
+	{
+		id: "RDO-2040",
+		date: "22/07/2026",
+		projectId: "corporate-tower",
+		responsible: "Eng. Ana Beatriz",
+		effectiveReal: 71,
+		effectivePlanned: 72,
+		weather: "☀️",
+		occurrences: 0,
+		iaStatus: "approved"
+	},
+	{
+		id: "RDO-2039",
+		date: "21/07/2026",
+		projectId: "shopping-central",
+		responsible: "Eng. Roberto Lima",
+		effectiveReal: 38,
+		effectivePlanned: 90,
+		weather: "🌧️",
+		occurrences: 6,
+		iaStatus: "critical"
+	}
+];
+var RAG_DOCS = [
+	{
+		id: "d1",
+		name: "Cronograma_Base_TorreA_v2.xlsx",
+		agent: "1",
+		size: "2.4 MB",
+		status: "vectorized",
+		progress: 100
+	},
+	{
+		id: "d2",
+		name: "Contrato_Empreitada_Global.pdf",
+		agent: "0",
+		size: "8.1 MB",
+		status: "processing",
+		progress: 62
+	},
+	{
+		id: "d3",
+		name: "Histograma_MaoDeObra_Q3.xlsx",
+		agent: "2",
+		size: "1.1 MB",
+		status: "vectorized",
+		progress: 100
+	},
+	{
+		id: "d4",
+		name: "Aditivo_Contratual_003.pdf",
+		agent: "0",
+		size: "1.8 MB",
+		status: "vectorized",
+		progress: 100
+	},
+	{
+		id: "d5",
+		name: "Memorial_Descritivo_TorreA.docx",
+		agent: "0",
+		size: "3.2 MB",
+		status: "processing",
+		progress: 34
+	},
+	{
+		id: "d6",
+		name: "Cronograma_MSProject_Corporate.mpp",
+		agent: "1",
+		size: "5.7 MB",
+		status: "queued",
+		progress: 0
+	},
+	{
+		id: "d7",
+		name: "Tabela_Equipamentos_2026.csv",
+		agent: "2",
+		size: "412 KB",
+		status: "vectorized",
+		progress: 100
+	}
+];
+var ProjectContext = (0, import_react.createContext)(null);
+function ProjectProvider({ children }) {
+	const [projectId, setProjectId] = (0, import_react.useState)("all");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProjectContext.Provider, {
+		value: {
+			projectId,
+			setProjectId
+		},
+		children
+	});
+}
+function useProjectFilter() {
+	const ctx = (0, import_react.useContext)(ProjectContext);
+	if (!ctx) throw new Error("useProjectFilter must be used within ProjectProvider");
+	return ctx;
+}
+function cn(...inputs) {
+	return twMerge(clsx(inputs));
+}
+var DropdownMenu = Root2;
+var DropdownMenuTrigger = Trigger;
+var DropdownMenuSubTrigger = import_react.forwardRef(({ className, inset, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SubTrigger2, {
+	ref,
+	className: cn("flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", inset && "pl-8", className),
+	...props,
+	children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "ml-auto" })]
+}));
+DropdownMenuSubTrigger.displayName = SubTrigger2.displayName;
+var DropdownMenuSubContent = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubContent2, {
+	ref,
+	className: cn("z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-dropdown-menu-content-transform-origin)", className),
+	...props
+}));
+DropdownMenuSubContent.displayName = SubContent2.displayName;
+var DropdownMenuContent = import_react.forwardRef(({ className, sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2, {
+	ref,
+	sideOffset,
+	className: cn("z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md", "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-dropdown-menu-content-transform-origin)", className),
+	...props
+}) }));
+DropdownMenuContent.displayName = Content2.displayName;
+var DropdownMenuItem = import_react.forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item2, {
+	ref,
+	className: cn("relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0", inset && "pl-8", className),
+	...props
+}));
+DropdownMenuItem.displayName = Item2.displayName;
+var DropdownMenuCheckboxItem = import_react.forwardRef(({ className, children, checked, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CheckboxItem2, {
+	ref,
+	className: cn("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", className),
+	checked,
+	...props,
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemIndicator2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "h-4 w-4" }) })
+	}), children]
+}));
+DropdownMenuCheckboxItem.displayName = CheckboxItem2.displayName;
+var DropdownMenuRadioItem = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(RadioItem2, {
+	ref,
+	className: cn("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", className),
+	...props,
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemIndicator2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Circle, { className: "h-2 w-2 fill-current" }) })
+	}), children]
+}));
+DropdownMenuRadioItem.displayName = RadioItem2.displayName;
+var DropdownMenuLabel = import_react.forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label2, {
+	ref,
+	className: cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className),
+	...props
+}));
+DropdownMenuLabel.displayName = Label2.displayName;
+var DropdownMenuSeparator = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator2, {
+	ref,
+	className: cn("-mx-1 my-1 h-px bg-muted", className),
+	...props
+}));
+DropdownMenuSeparator.displayName = Separator2.displayName;
+var DropdownMenuShortcut = ({ className, ...props }) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: cn("ml-auto text-xs tracking-widest opacity-60", className),
+		...props
+	});
+};
+DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
+var Popover = Root2$1;
+var PopoverTrigger = Trigger$1;
+var PopoverContent = import_react.forwardRef(({ className, align = "center", sideOffset = 4, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2$1, {
+	ref,
+	align,
+	sideOffset,
+	className: cn("z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-popover-content-transform-origin)", className),
+	...props
+}) }));
+PopoverContent.displayName = Content2$1.displayName;
+var PROFILE_ALERTS = [
+	{
+		id: "g1",
+		profile: "gestor",
+		title: "💰 Multa Contratual iminente",
+		detail: "Atraso acumulado de 3 dias na Torre A (R$ 45.000,00 de risco).",
+		severity: "critical",
+		time: "há 8 min"
+	},
+	{
+		id: "g2",
+		profile: "gestor",
+		title: "📈 Desvio Financeiro",
+		detail: "Shopping Central com 12% acima do orçamento na fase de fundação.",
+		severity: "warning",
+		time: "há 42 min"
+	},
+	{
+		id: "e1",
+		profile: "engenheiro",
+		title: "🚜 Sugestão de IA · Realocação",
+		detail: "Realocar 2 pedreiros para a Laje L3 para evitar perda do caminho crítico.",
+		severity: "warning",
+		time: "há 15 min"
+	},
+	{
+		id: "e2",
+		profile: "engenheiro",
+		title: "🛠️ Frente de serviço travada",
+		detail: "Alvenaria do 5º pavimento sem material desde 14h30 (Torre A).",
+		severity: "critical",
+		time: "há 1h"
+	},
+	{
+		id: "c1",
+		profile: "empresa",
+		title: "📜 Aditivo Exigido",
+		detail: "Formalização de aditivo de prazo referente às paralisações por chuva em Julho.",
+		severity: "warning",
+		time: "há 3h"
+	},
+	{
+		id: "c2",
+		profile: "empresa",
+		title: "⚖️ Cláusula 8.2 acionada",
+		detail: "Cláusula de força maior recomendada para 2 dias de paralisação registrados.",
+		severity: "warning",
+		time: "há 5h"
+	}
+];
+function TopHeader() {
+	const { projectId, setProjectId } = useProjectFilter();
+	const [q, setQ] = (0, import_react.useState)("");
+	const [tab, setTab] = (0, import_react.useState)("gestor");
+	const navigate = useNavigate();
+	const selected = projectId === "all" ? "Todas as Obras" : PROJECTS.find((p) => p.id === projectId)?.name ?? "Todas as Obras";
+	const filtered = PROFILE_ALERTS.filter((a) => a.profile === tab);
+	const totalCount = PROFILE_ALERTS.length + ALERTS.length;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
+		className: "sticky top-0 z-20 h-14 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-xl",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex h-full items-center gap-3 px-6",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenu, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuTrigger, {
+					asChild: true,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						className: "flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:border-indigo-500/40 hover:bg-zinc-900 transition-colors",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rounded-full bg-indigo-500" }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "max-w-[280px] truncate",
+								children: selected
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "h-3.5 w-3.5 text-zinc-500" })
+						]
+					})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenuContent, {
+					align: "start",
+					className: "w-72 bg-zinc-900 border-zinc-800",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuLabel, {
+							className: "text-[10px] uppercase tracking-wider text-zinc-500",
+							children: "Contexto Global"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuItem, {
+							onClick: () => setProjectId("all"),
+							className: "text-sm focus:bg-zinc-800",
+							children: "🏢 Todas as Obras"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuSeparator, { className: "bg-zinc-800" }),
+						PROJECTS.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenuItem, {
+							onClick: () => setProjectId(p.id),
+							className: "flex flex-col items-start gap-0.5 text-sm focus:bg-zinc-800",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-zinc-100",
+								children: p.name
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-[10px] text-zinc-500",
+								children: p.location
+							})]
+						}, p.id))
+					]
+				})] }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "flex-1 max-w-xl",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "relative",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								value: q,
+								onChange: (e) => setQ(e.target.value),
+								placeholder: "Buscar RDOs, fotos, ocorrências, contratos…",
+								className: "w-full rounded-md border border-zinc-800 bg-zinc-900/60 py-1.5 pl-9 pr-16 text-sm text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/50 focus:bg-zinc-900 transition-colors"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", {
+								className: "pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-400",
+								children: "⌘K"
+							})
+						]
+					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popover, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTrigger, {
+					asChild: true,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						className: "relative flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-indigo-500/40 transition-colors",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Bell, { className: "h-4 w-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white",
+							children: totalCount
+						})]
+					})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PopoverContent, {
+					align: "end",
+					className: "w-[420px] p-0 bg-zinc-900 border-zinc-800",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "border-b border-zinc-800 px-4 py-3",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "text-sm font-semibold text-zinc-100",
+								children: "Central de Notificações Inteligentes"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-[11px] text-zinc-500",
+								children: [
+									"Matriz segmentada por perfil · ",
+									totalCount,
+									" alertas ativos"
+								]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "grid grid-cols-3 border-b border-zinc-800 bg-zinc-950/40",
+							children: [
+								{
+									k: "gestor",
+									label: "Gestor",
+									sub: "Financeiro"
+								},
+								{
+									k: "engenheiro",
+									label: "Engenheiro",
+									sub: "Operacional"
+								},
+								{
+									k: "empresa",
+									label: "Empresa",
+									sub: "Contratual"
+								}
+							].map((t) => {
+								const active = tab === t.k;
+								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									onClick: () => setTab(t.k),
+									className: ["px-3 py-2 text-[11px] transition-colors border-b-2", active ? "border-indigo-500 text-indigo-300 bg-indigo-500/5" : "border-transparent text-zinc-500 hover:text-zinc-300"].join(" "),
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "font-semibold",
+										children: t.label
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "text-[9px] uppercase tracking-wider opacity-70",
+										children: t.sub
+									})]
+								}, t.k);
+							})
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "max-h-96 overflow-y-auto scrollbar-thin",
+							children: filtered.map((a) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: () => navigate({ to: "/diagnostico" }),
+								className: "w-full text-left border-b border-zinc-800/60 px-4 py-3 hover:bg-zinc-800/40 transition-colors",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "flex items-start gap-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: ["mt-1 h-1.5 w-1.5 shrink-0 rounded-full", a.severity === "critical" ? "bg-rose-500" : "bg-amber-500"].join(" ") }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "min-w-0 flex-1",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "text-xs font-medium text-zinc-100",
+												children: a.title
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "mt-0.5 text-[11px] text-zinc-400 leading-relaxed",
+												children: a.detail
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "mt-1 text-[10px] text-zinc-500 font-mono",
+												children: a.time
+											})
+										]
+									})]
+								})
+							}, a.id))
+						})
+					]
+				})] })
+			]
+		})
+	});
+}
+var seed = [
+	{
+		id: "log-001",
+		timestamp: "21/07/2026 - 17:48:02",
+		user: "Eng. Carlos Andrade",
+		project: "Torre A",
+		event: "Aprovação de Custo Extra (Horas Extras - Concretagem)",
+		category: "Financeiro",
+		metadata: "Impacto: +R$ 2.400,00 · Validade: Aprovada",
+		hash: "8f9a2b1c"
+	},
+	{
+		id: "log-002",
+		timestamp: "21/07/2026 - 17:45:12",
+		user: "Eng. Roberto Silva",
+		project: "Torre A",
+		event: "Assinatura e Envio de RDO",
+		category: "Assinatura Mobile",
+		metadata: "GPS: Validado (-20.31, -40.31) · Assinatura: Digital",
+		hash: "3c4d1e88"
+	},
+	{
+		id: "log-003",
+		timestamp: "21/07/2026 - 14:10:00",
+		user: "Agente 1 (IA)",
+		project: "Torre A",
+		event: "Alerta Ignorado pelo Gestor",
+		category: "Alertas Ignorados",
+		metadata: "Alerta: Déficit de Pedreiros (Atraso 5%)",
+		hash: "7a1b9c4d"
+	},
+	{
+		id: "log-004",
+		timestamp: "20/07/2026 - 09:22:41",
+		user: "Hub RAG",
+		project: "Torre A",
+		event: "Reprocessamento de Linha de Base (MS Project)",
+		category: "Alteração de Cronograma",
+		metadata: "Documento: Cronograma_Base_TorreA_v2.xlsx · Vetores: 4.8K",
+		hash: "2e5f0aa9"
+	}
+];
+function randHash() {
+	return Array.from({ length: 8 }).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
+}
+function nowStamp() {
+	const d = /* @__PURE__ */ new Date();
+	const pad = (n) => String(n).padStart(2, "0");
+	return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} - ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+var AuditLogContext = (0, import_react.createContext)(null);
+function AuditLogProvider({ children }) {
+	const [entries, setEntries] = (0, import_react.useState)(seed);
+	const addEntry = (0, import_react.useCallback)((e) => {
+		setEntries((cur) => [{
+			...e,
+			id: `log-${Date.now()}`,
+			timestamp: nowStamp(),
+			hash: randHash()
+		}, ...cur]);
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuditLogContext.Provider, {
+		value: {
+			entries,
+			addEntry
+		},
+		children
+	});
+}
+function useAuditLog() {
+	const ctx = (0, import_react.useContext)(AuditLogContext);
+	if (!ctx) throw new Error("useAuditLog must be used within AuditLogProvider");
+	return ctx;
+}
+function Shell({ children }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProjectProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AuditLogProvider, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "min-h-screen w-full bg-zinc-950 text-zinc-100",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppSidebar, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "md:pl-[250px]",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TopHeader, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
+				className: "p-6",
+				children
+			})]
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster, {
+		theme: "dark",
+		position: "bottom-right",
+		toastOptions: { style: {
+			background: "#18181B",
+			border: "1px solid #3F3F46",
+			color: "#FAFAFA"
+		} }
+	})] }) });
+}
+//#endregion
+export { Shell as a, RDOS as i, PROJECTS as n, useAuditLog as o, RAG_DOCS as r, useProjectFilter as s, ALERTS as t };

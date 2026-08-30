@@ -9,25 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RdoRouteImport } from './routes/rdo'
-import { Route as RagRouteImport } from './routes/rag'
-import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
+import { Route as ObrasRouteImport } from './routes/obras'
+import { Route as RagRouteImport } from './routes/rag'
+import { Route as RdoRouteImport } from './routes/rdo'
 
-const RdoRoute = RdoRouteImport.update({
-  id: '/rdo',
-  path: '/rdo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RagRoute = RagRouteImport.update({
-  id: '/rag',
-  path: '/rag',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DiagnosticoRoute = DiagnosticoRouteImport.update({
-  id: '/diagnostico',
-  path: '/diagnostico',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
@@ -35,9 +26,24 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DiagnosticoRoute = DiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObrasRoute = ObrasRouteImport.update({
+  id: '/obras',
+  path: '/obras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RagRoute = RagRouteImport.update({
+  id: '/rag',
+  path: '/rag',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RdoRoute = RdoRouteImport.update({
+  id: '/rdo',
+  path: '/rdo',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/obras': typeof ObrasRoute
   '/rag': typeof RagRoute
   '/rdo': typeof RdoRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/obras': typeof ObrasRoute
   '/rag': typeof RagRoute
   '/rdo': typeof RdoRoute
 }
@@ -60,46 +68,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/obras': typeof ObrasRoute
   '/rag': typeof RagRoute
   '/rdo': typeof RdoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/configuracoes' | '/diagnostico' | '/rag' | '/rdo'
+  fullPaths:
+    '/' | '/configuracoes' | '/diagnostico' | '/obras' | '/rag' | '/rdo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/configuracoes' | '/diagnostico' | '/rag' | '/rdo'
-  id: '__root__' | '/' | '/configuracoes' | '/diagnostico' | '/rag' | '/rdo'
+  to: '/' | '/configuracoes' | '/diagnostico' | '/obras' | '/rag' | '/rdo'
+  id:
+    | '__root__'
+    | '/'
+    | '/configuracoes'
+    | '/diagnostico'
+    | '/obras'
+    | '/rag'
+    | '/rdo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
+  ObrasRoute: typeof ObrasRoute
   RagRoute: typeof RagRoute
   RdoRoute: typeof RdoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/rdo': {
-      id: '/rdo'
-      path: '/rdo'
-      fullPath: '/rdo'
-      preLoaderRoute: typeof RdoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rag': {
-      id: '/rag'
-      path: '/rag'
-      fullPath: '/rag'
-      preLoaderRoute: typeof RagRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/diagnostico': {
-      id: '/diagnostico'
-      path: '/diagnostico'
-      fullPath: '/diagnostico'
-      preLoaderRoute: typeof DiagnosticoRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuracoes': {
@@ -109,11 +113,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/diagnostico': {
+      id: '/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/diagnostico'
+      preLoaderRoute: typeof DiagnosticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/obras': {
+      id: '/obras'
+      path: '/obras'
+      fullPath: '/obras'
+      preLoaderRoute: typeof ObrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rag': {
+      id: '/rag'
+      path: '/rag'
+      fullPath: '/rag'
+      preLoaderRoute: typeof RagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rdo': {
+      id: '/rdo'
+      path: '/rdo'
+      fullPath: '/rdo'
+      preLoaderRoute: typeof RdoRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -123,9 +148,20 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   DiagnosticoRoute: DiagnosticoRoute,
+  ObrasRoute: ObrasRoute,
   RagRoute: RagRoute,
   RdoRoute: RdoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

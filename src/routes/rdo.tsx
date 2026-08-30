@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Shell } from "@/components/layout/Shell";
 import { RDOS, PROJECTS, type RdoRow } from "@/lib/mock-data";
 import { useProjectFilter } from "@/lib/project-context";
-import { useMemo, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useMemo, useState, useEffect } from "react";
 import {
   FileText,
   FileSpreadsheet,
@@ -48,12 +49,42 @@ function RdoBody() {
   const { projectId } = useProjectFilter();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [openRdo, setOpenRdo] = useState<RdoRow | null>(null);
+  const [rdos, setRdos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Carregar RDOs do Supabase
+  useEffect(() => {
+    const loadRdos = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase.from("rdos").select("*");
+        if (!error && data) {
+          setRdos(data);
+        } else {
+          console.log("Usando mock data para RDOs");
+          setRdos(RDOS);
+        }
+      } catch (err) {
+        console.log("Usando mock data como fallback");
+        setRdos(RDOS);
+      } finally {
+        setLoading(false);
+      }
+    };
+    void loadRdos();
+  }, []);
 
   const rows = useMemo(() => {
-    return RDOS.filter((r) => (projectId === "all" ? true : r.projectId === projectId)).filter(
-      (r) => (statusFilter === "all" ? true : r.iaStatus === statusFilter),
-    );
-  }, [projectId, statusFilter]);
+    if (rdos.length === 0) return RDOS;
+    return rdos.filter((r) => {
+      const matchProject = projectId === "all" ? true : r.obra_id === projectId;
+      const matchStatus =
+        statusFilter === "all" || statusFilter === "rascunho"
+          ? r.status === "rascunho"
+          : r.status === statusFilter;
+      return matchProject && matchStatus;
+    });
+  }, [rdos, projectId, statusFilter]);
 
   return (
     <div className="space-y-6">
@@ -88,11 +119,10 @@ function RdoBody() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-indigo-500/50"
         >
-          <option value="all">Status IA: Todos</option>
-          <option value="approved">Aprovado</option>
-          <option value="warning">Com Alerta</option>
-          <option value="critical">Crítico</option>
-          <option value="pending">Pendente</option>
+          <option value="all">Status: Todos</option>
+          <option value="rascunho">Rascunho (Pendentes)</option>
+          <option value="aprovado">Aprovado</option>
+          <option value="rejeitado">Rejeitado</option>
         </select>
         <FilterChip label="Resp. Técnico: Todos" />
 
@@ -215,6 +245,45 @@ function IaStatusBadge({ status }: { status: RdoRow["iaStatus"] }) {
 function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
   const project = PROJECTS.find((p) => p.id === rdo.projectId);
   const [decision, setDecision] = useState<"none" | "approved" | "rejected">("none");
+  const [saving, setSaving] = useState(false);
+
+  const handleApprove = async () => {
+    try {
+      setSaving(true);
+      const { error } = await supabase
+        .from("rdos")
+        .update({ status: "aprovado", atualizado_em: new Date().toISOString() })
+        .eq("id", rdo.id || rdo.projectId);
+
+      if (!error) {
+        setDecision("approved");
+        setTimeout(() => onClose(), 1500);
+      } else {
+        console.error("Erro ao aprovar:", error);
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      setSaving(true);
+      const { error } = await supabase
+        .from("rdos")
+        .update({ status: "rejeitado", atualizado_em: new Date().toISOString() })
+        .eq("id", rdo.id || rdo.projectId);
+
+      if (!error) {
+        setDecision("rejected");
+        setTimeout(() => onClose(), 1500);
+      } else {
+        console.error("Erro ao rejeitar:", error);
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
@@ -351,16 +420,18 @@ function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
             {decision === "none" ? (
               <div className="space-y-2 pt-2 border-t border-zinc-800">
                 <button
-                  onClick={() => setDecision("approved")}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 text-sm font-medium transition-colors"
+                  onClick={handleApprove}
+                  disabled={saving}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 disabled:cursor-not-allowed text-white px-4 py-2.5 text-sm font-medium transition-colors"
                 >
-                  <CheckCircle2 className="h-4 w-4" /> Aprovar RDO
+                  <CheckCircle2 className="h-4 w-4" /> {saving ? "Aprovando..." : "Aprovar RDO"}
                 </button>
                 <button
-                  onClick={() => setDecision("rejected")}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-md border border-rose-500/40 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 px-4 py-2.5 text-sm font-medium transition-colors"
+                  onClick={handleReject}
+                  disabled={saving}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-md border border-rose-500/40 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 disabled:opacity-60 disabled:cursor-not-allowed px-4 py-2.5 text-sm font-medium transition-colors"
                 >
-                  <XCircle className="h-4 w-4" /> Solicitar Correção ao Engenheiro
+                  <XCircle className="h-4 w-4" /> {saving ? "Rejeitando..." : "Solicitar Correção ao Engenheiro"}
                 </button>
               </div>
             ) : (
