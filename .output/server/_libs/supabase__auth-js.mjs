@@ -1,4 +1,4 @@
-import { h as __rest } from "./@radix-ui/react-dropdown-menu+[...].mjs";
+import { E as __rest } from "./@radix-ui/react-dropdown-menu+[...].mjs";
 //#region node_modules/@supabase/auth-js/dist/module/lib/version.js
 var version = "2.112.4";
 //#endregion

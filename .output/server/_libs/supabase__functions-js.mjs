@@ -1,4 +1,4 @@
-import { m as __awaiter } from "./@radix-ui/react-dropdown-menu+[...].mjs";
+import { T as __awaiter } from "./@radix-ui/react-dropdown-menu+[...].mjs";
 //#region node_modules/@supabase/functions-js/dist/module/helper.js
 var resolveFetch = (customFetch) => {
 	if (customFetch) return (...args) => customFetch(...args);
