@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Shell } from "@/components/layout/Shell";
-import { RDOS, PROJECTS, type RdoRow } from "@/lib/mock-data";
 import { useProjectFilter } from "@/lib/project-context";
 import { supabase } from "@/lib/supabase";
 import { useMemo, useState, useEffect } from "react";
@@ -20,6 +19,21 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
+
+interface RdoRow {
+  id: string;
+  date: string;
+  obraId: string;
+  obraName: string;
+  obraLocation: string;
+  responsible: string;
+  effectiveReal: number;
+  effectivePlanned: number;
+  weather: string;
+  occurrences: number;
+  status: string;
+  iaStatus: "approved" | "warning" | "critical" | "pending";
+}
 
 export const Route = createFileRoute("/rdo")({
   head: () => ({
@@ -49,7 +63,7 @@ function RdoBody() {
   const { projectId } = useProjectFilter();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [openRdo, setOpenRdo] = useState<RdoRow | null>(null);
-  const [rdos, setRdos] = useState<any[]>([]);
+  const [rdos, setRdos] = useState<RdoRow[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Carregar RDOs do Supabase
@@ -57,16 +71,20 @@ function RdoBody() {
     const loadRdos = async () => {
       try {
         setLoading(true);
-        const { data, error } = await supabase.from("rdos").select("*");
-        if (!error && data) {
-          setRdos(data);
-        } else {
-          console.log("Usando mock data para RDOs");
-          setRdos(RDOS);
-        }
+        const [{ data: rdoData, error: rdoError }, { data: obraData, error: obraError }] =
+          await Promise.all([
+            supabase.from("rdos").select("*").order("data_rdo", { ascending: false }),
+            supabase.from("obras").select("id, nome, localizacao"),
+          ]);
+
+        if (rdoError) throw rdoError;
+        if (obraError) throw obraError;
+
+        const obrasById = new Map((obraData ?? []).map((obra) => [obra.id, obra]));
+        setRdos((rdoData ?? []).map((rdo) => normalizeRdo(rdo, obrasById.get(rdo.obra_id))));
       } catch (err) {
-        console.log("Usando mock data como fallback");
-        setRdos(RDOS);
+        console.error("Erro ao carregar RDOs do Supabase:", err);
+        setRdos([]);
       } finally {
         setLoading(false);
       }
@@ -75,13 +93,9 @@ function RdoBody() {
   }, []);
 
   const rows = useMemo(() => {
-    if (rdos.length === 0) return RDOS;
     return rdos.filter((r) => {
-      const matchProject = projectId === "all" ? true : r.obra_id === projectId;
-      const matchStatus =
-        statusFilter === "all" || statusFilter === "rascunho"
-          ? r.status === "rascunho"
-          : r.status === statusFilter;
+      const matchProject = projectId === "all" ? true : r.obraId === projectId;
+      const matchStatus = statusFilter === "all" || r.status === statusFilter;
       return matchProject && matchStatus;
     });
   }, [rdos, projectId, statusFilter]);
@@ -111,7 +125,7 @@ function RdoBody() {
           label={
             projectId === "all"
               ? "Obra: Todas"
-              : `Obra: ${PROJECTS.find((p) => p.id === projectId)?.name.split(" - ")[0]}`
+              : `Obra: ${rdos.find((r) => r.obraId === projectId)?.obraName ?? "Selecionada"}`
           }
         />
         <select
@@ -157,7 +171,6 @@ function RdoBody() {
             </thead>
             <tbody>
               {rows.map((r) => {
-                const project = PROJECTS.find((p) => p.id === r.projectId);
                 return (
                   <tr
                     key={r.id}
@@ -166,7 +179,7 @@ function RdoBody() {
                   >
                     <Td className="font-mono text-zinc-300">{r.date}</Td>
                     <Td className="font-mono text-indigo-400">{r.id}</Td>
-                    <Td className="text-zinc-200">{project?.name.split(" - ")[0]}</Td>
+                    <Td className="text-zinc-200">{r.obraName}</Td>
                     <Td className="text-zinc-300">{r.responsible}</Td>
                     <Td className="text-right font-mono">
                       <span
@@ -195,7 +208,7 @@ function RdoBody() {
           </table>
         </div>
         <div className="flex items-center justify-between border-t border-zinc-800/60 px-4 py-2.5 text-[11px] text-zinc-500">
-          <span>Exibindo {rows.length} de {RDOS.length} RDOs</span>
+          <span>Exibindo {rows.length} de {rdos.length} RDOs</span>
           <div className="flex items-center gap-1">
             <button className="rounded border border-zinc-800 px-2 py-1 hover:bg-zinc-800">‹</button>
             <span className="px-2">Página 1 de 1</span>
@@ -226,6 +239,32 @@ function FilterChip({ label }: { label: string }) {
   );
 }
 
+function normalizeRdo(
+  rdo: Record<string, any>,
+  obra?: { nome?: string; localizacao?: string },
+): RdoRow {
+  const crewCount = Array.isArray(rdo.crew) ? rdo.crew.length : 0;
+  const occurrenceCount = Array.isArray(rdo.ocorrencias)
+    ? rdo.ocorrencias.length
+    : Number(rdo.ocorrencias) || 0;
+  const status = rdo.status ?? "rascunho";
+
+  return {
+    id: rdo.id,
+    date: rdo.data_rdo ? new Date(`${rdo.data_rdo}T00:00:00`).toLocaleDateString("pt-BR") : "-",
+    obraId: rdo.obra_id,
+    obraName: obra?.nome ?? "Obra não encontrada",
+    obraLocation: obra?.localizacao ?? "",
+    responsible: rdo.engenheiro,
+    effectiveReal: crewCount,
+    effectivePlanned: crewCount,
+    weather: rdo.clima ?? "-",
+    occurrences: occurrenceCount,
+    status,
+    iaStatus: status === "aprovado" ? "approved" : status === "rejeitado" ? "critical" : "pending",
+  };
+}
+
 function IaStatusBadge({ status }: { status: RdoRow["iaStatus"] }) {
   const map = {
     approved: { icon: CheckCircle2, label: "Aprovado", cls: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300" },
@@ -243,7 +282,6 @@ function IaStatusBadge({ status }: { status: RdoRow["iaStatus"] }) {
 }
 
 function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
-  const project = PROJECTS.find((p) => p.id === rdo.projectId);
   const [decision, setDecision] = useState<"none" | "approved" | "rejected">("none");
   const [saving, setSaving] = useState(false);
 
@@ -253,7 +291,7 @@ function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
       const { error } = await supabase
         .from("rdos")
         .update({ status: "aprovado", atualizado_em: new Date().toISOString() })
-        .eq("id", rdo.id || rdo.projectId);
+        .eq("id", rdo.id);
 
       if (!error) {
         setDecision("approved");
@@ -272,7 +310,7 @@ function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
       const { error } = await supabase
         .from("rdos")
         .update({ status: "rejeitado", atualizado_em: new Date().toISOString() })
-        .eq("id", rdo.id || rdo.projectId);
+        .eq("id", rdo.id);
 
       if (!error) {
         setDecision("rejected");
@@ -294,7 +332,7 @@ function RdoSplitModal({ rdo, onClose }: { rdo: RdoRow; onClose: () => void }) {
             <div className="flex items-center gap-2">
               <span className="font-mono text-sm text-indigo-400">{rdo.id}</span>
               <span className="text-zinc-600">·</span>
-              <span className="text-sm text-zinc-100">{project?.name}</span>
+              <span className="text-sm text-zinc-100">{rdo.obraName}</span>
               <span className="font-mono text-[11px] text-zinc-500">{rdo.date}</span>
             </div>
             <div className="text-[11px] text-zinc-500 mt-0.5">Visualizador Duplo · Auditoria Split-Screen</div>

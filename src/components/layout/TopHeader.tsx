@@ -1,8 +1,9 @@
 import { Bell, Search, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { PROJECTS, ALERTS } from "@/lib/mock-data";
+import { ALERTS } from "@/lib/mock-data";
 import { useProjectFilter } from "@/lib/project-context";
+import { supabase } from "@/lib/supabase";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +23,12 @@ interface ProfileAlert {
   detail: string;
   severity: "warning" | "critical";
   time: string;
+}
+
+interface ObraOption {
+  id: string;
+  nome: string;
+  localizacao: string;
 }
 
 const PROFILE_ALERTS: ProfileAlert[] = [
@@ -79,11 +86,24 @@ export function TopHeader() {
   const { projectId, setProjectId } = useProjectFilter();
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<Profile>("gestor");
+  const [obras, setObras] = useState<ObraOption[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadObras = async () => {
+      const { data, error } = await supabase
+        .from("obras")
+        .select("id, nome, localizacao")
+        .order("nome");
+      if (!error && data) setObras(data);
+    };
+    void loadObras();
+  }, []);
+
   const selected =
     projectId === "all"
       ? "Todas as Obras"
-      : PROJECTS.find((p) => p.id === projectId)?.name ?? "Todas as Obras";
+      : obras.find((obra) => obra.id === projectId)?.nome ?? "Todas as Obras";
 
   const filtered = PROFILE_ALERTS.filter((a) => a.profile === tab);
   const totalCount = PROFILE_ALERTS.length + ALERTS.length;
@@ -110,14 +130,14 @@ export function TopHeader() {
               🏢 Todas as Obras
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-zinc-800" />
-            {PROJECTS.map((p) => (
+            {obras.map((obra) => (
               <DropdownMenuItem
-                key={p.id}
-                onClick={() => setProjectId(p.id)}
+                key={obra.id}
+                onClick={() => setProjectId(obra.id)}
                 className="flex flex-col items-start gap-0.5 text-sm focus:bg-zinc-800"
               >
-                <span className="text-zinc-100">{p.name}</span>
-                <span className="text-[10px] text-zinc-500">{p.location}</span>
+                <span className="text-zinc-100">{obra.nome}</span>
+                <span className="text-[10px] text-zinc-500">{obra.localizacao}</span>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
